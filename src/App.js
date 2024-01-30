@@ -13,6 +13,24 @@ class App extends React.Component {
                   }
   }
 
+  add = (item) => {
+    //react는 props는 수정할 수 없고
+    //state는 수정이 가능하지만 원본을 직접 수정하는 것은 불가
+    //setState 메소드를 이용해서만 수정이 가능
+
+    //배열에 데이터를 추가하기 위해서 state의 배열을 복사
+    const thisItems = this.state.items;
+
+    //item의 id와 done 값을 설정 - title만 입력하기 때문
+    item.id = "ID_" + thisItems.length;
+    item.done = false;
+
+    //복사한 데이터에 추가
+    thisItems.push(item)
+    //복사한 데이터를 다시 state에 적용
+    this.setState({items:thisItems});
+  }
+
   render(){
     var display = this.state.items.length > 0 && (
       <Paper style={{margin:16}}>
@@ -27,7 +45,7 @@ class App extends React.Component {
     return(
         <div className="AppToDo">
           <Container maxWidth="md"> 
-            <AddToDo />
+            <AddToDo add={this.add}/>
             {display}
           </Container>
         </div>
@@ -35,4 +53,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default App; 
