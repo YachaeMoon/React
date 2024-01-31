@@ -4,20 +4,26 @@ import {
     ListItem,
     ListItemText,
     InputBase,
-    Checkbox
+    Checkbox,
+    IconButton,
+    ListItemSecondaryAction,
 }from "@material-ui/core"
+
+import DeleteOutlined from "@material-ui/icons/DeleteOutlined"
 
 class ToDo extends React.Component{
 
-    //생성자
     constructor(props){
-        super(props); //상위 클래스에서 넘겨준 모든 props를 현재 클래스에 저장
-        //state 생성 - item이라는 이름으로 props 중에서 item이라는 값을 state로 저장
-        this.state = {item:props.item}
+        super(props);
+        this.state = {item:this.props.item}
+        this.delete = this.props.delete
+    }
+
+    deleteEventHandler = (e) => {
+        this.delete(this.state.item)
     }
 
     render(){
-        //자주 사용하는 데이터를 짧게 사용하기 위해 다른 변수에 대입
         const item = this.state.item;
         return(
             <ListItem>
@@ -29,10 +35,15 @@ class ToDo extends React.Component{
                         id={item.id}
                         name={item.id}
                         value={item.title}
-                        multiline={true} //여러줄로 생성
-                        fullWidth={true} //화면에 꽉차게
+                        multiline={true} 
+                        fullWidth={true} 
                     />
                 </ListItemText>
+                <ListItemSecondaryAction>
+                    <IconButton aria-label="Delete ToDo" onClick={this.deleteEventHandler}> 
+                        <DeleteOutlined />
+                    </IconButton>
+                </ListItemSecondaryAction>
             </ListItem>
         )
     }
